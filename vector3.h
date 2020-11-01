@@ -17,4 +17,6 @@ v3 v3x();
 v3 v3y();
 v3 v3z();
 
+void v3Print(v3 v);
+
 #endif

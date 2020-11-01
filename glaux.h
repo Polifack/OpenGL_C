@@ -22,6 +22,9 @@ void rotateY(float a);
 void rotateZ(float a);
 void rotate(v3 v);
 
+// Auxiliar functions to rotate arround something
+void rotateArround(v3 currentPosition, v3 point, v3 angle);
+
 // Auxiliar color functions
 void setColor(v3 v);
 

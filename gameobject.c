@@ -1,12 +1,19 @@
 #include "transform.h"
 #include "gameobject.h"
+#include "vector3.h"
+#include <GL/gl.h>
 
 gameobject createGameobject(v3 pos, v3 scl, v3 rot, drawFunction draw){
     gameobject go;
 
+    // Set the values to assigned
     go.transform.position = pos;
     go.transform.scale = scl;
     go.transform.eulerAngles = rot;
+
+    // Set default values
+    go.transform.anchorPoint = pos;
+    go.transform.rotation = v3New(0, 0, 0);
     
     go.draw = draw;
 
@@ -14,16 +21,8 @@ gameobject createGameobject(v3 pos, v3 scl, v3 rot, drawFunction draw){
 }
 
 void renderGameobject(gameobject go){
-    // en opengl todas las transformaciones se hacen sobre el eje
-    // guardar la matriz de transformacion y luego recuperarla permite
-    // que las transformaciones se hagan sobre objetos
-
-    glPushMatrix();
-
     applyTransform(go.transform);
     go.draw();
-
-    glPopMatrix();
 }
 
 gameobject goRotation(gameobject go, v3 delta){

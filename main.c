@@ -60,32 +60,54 @@ void bodyDrawFunction(){
         glVertex3f( 0.0f, 1.0f, 0.25f);
     glEnd();  
 }
+
+
+
+void centerDrawFunction(){
+    glutSolidSphere(1, 20, 20);
+}
 gameobject createBody(){
-    v3 position = v3New(0, 0, 0);
+    v3 position = v3New(5, 5, 4);
     v3 scale = v3New(3.0f, 5.0f, 1.0f);
     v3 rotation = v3New(0, 0, 0);
     gameobject go = createGameobject(position, scale, rotation, bodyDrawFunction);
     return go;
 }
+gameobject createCenter(){
+    v3 p = v3New(0, 0, 0);
+    v3 s = v3New(1, 1, 1);
+    v3 r = v3New(0, 0, 0);
 
+    gameobject go = createGameobject(p, s, r, centerDrawFunction);
+    return go;
+}
 
 
 // Program
 
 float aspectRatio;
 gameobject body;
+gameobject center;
+gameobject rotator;
 
 void init() {
     glClearColor(0.0,0.0,0.0,0.0);                              // Set black to background color
 
     body = createBody();
+    center = createCenter();
 }
 
 void display() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);         // Borrado del FrameBuffer
     glEnable(GL_DEPTH_TEST);
+    glLoadIdentity();
 
+    v3 delta = v3New(0, 0, 5);
+    
+    
+    body.transform = doRotateArround(body.transform, center.transform.position, delta);
     renderGameobject(body);
+    renderGameobject(center);
 
     glLoadIdentity();
     glutSwapBuffers();   
