@@ -4,14 +4,12 @@
 #include <GL/gl.h>
 
 void applyTransform(transform t){
-    glLoadIdentity();
-    
     move(t.position);
     
     rotate(t.eulerAngles);
-    rotateArround(t.position, t.anchorPoint, t.rotation);
-
     scale(t.scale);
+
+    rotateArround(t.position, t.anchorPoint, t.rotation);
 }
 
 
@@ -22,7 +20,6 @@ void applyTransform(transform t){
 // position -> posicion local
 // euler -> angulos locales
 // scale -> escala local
-
 
 transform doRotation(transform t, v3 deltaRotation){
     v3 currentRotation = t.eulerAngles;
@@ -54,16 +51,10 @@ transform doScaling(transform t, v3 deltaScale){
     return t;
 }
 
-// Esta funcion no actualiza la posicion del transform
-// Para que el valor de t.transform sea el correcto habria que hacer el calculo del angulo
-// Hay que implementar las operaciones con coords homogeneas
 transform doRotateArround(transform t, v3 rotationPoint, v3 deltaAngles){
-    // Set the object "pivot" in the rotation point
-    
+    // Set the object "pivot" in the rotation point    
     t.anchorPoint = rotationPoint;     
     t.rotation = v3Sum(t.rotation, deltaAngles);
-    
-    v3Print(t.rotation);
     
     return t;
 }

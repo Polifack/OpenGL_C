@@ -21,8 +21,10 @@ gameobject createGameobject(v3 pos, v3 scl, v3 rot, drawFunction draw){
 }
 
 void renderGameobject(gameobject go){
+    glPushMatrix();
     applyTransform(go.transform);
     go.draw();
+    glPopMatrix();
 }
 
 gameobject goRotation(gameobject go, v3 delta){
