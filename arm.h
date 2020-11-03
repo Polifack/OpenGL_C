@@ -5,13 +5,11 @@
 
 typedef struct s_arm{
     gameobject gameobject;
-    float sidespeed;
-    float upspeed;
-    float uplimit;
-    float dwlimit;
+    float speed;
+    v3 color;
 } arm;
 
-arm armNew(float hSpeed, float vSpeed, float uLimit, float dLimit, float startAngleH, float startAngleV);
+arm armNew(float speed, float initialAngl, v3 color);
 arm renderAtraction(arm a);
 
 #endif

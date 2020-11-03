@@ -1,5 +1,6 @@
 #include "glaux.h"
 #include "vector3.h"
+#include <stdlib.h>
 
 // Auxiliar functions to do translations in 3d space
 void moveX(float d){glTranslatef(d, 0, 0);}
@@ -37,4 +38,12 @@ void rotateArround(v3 currentPosition, v3 point, v3 angle){
 
 // Auxiliar color functions
 void setColor(v3 v){glColor3f(v.x, v.y, v.z);}
+v3 getRandomColor(){
+    float a = ((float)rand()/RAND_MAX)*(float)(100.0);  
+    float b = ((float)rand()/RAND_MAX)*(float)(100.0);  
+    float c = ((float)rand()/RAND_MAX)*(float)(100.0);  
+    return v3New(a,b,c);
+}
+
+
 

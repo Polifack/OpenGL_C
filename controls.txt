@@ -1,0 +1,24 @@
+NORIA:
+
+leftmouse+drag -> rotate on x axis
+leftmouse+shift+drag -> rotate on y axis (i could not do it with alt because of my window manager switched workspaces on alt)
+
+key_r -> change rotation
+key_s -> stop rotation
+
+rightmouse -> open menu
+		-- change speed
+		-- change color
+		-- exit
+
+
+FILES: 
+
+v3: auxiliar 'class' to manage vectors
+glaux: auxiliar functions because opengl ones are ugly
+transform: auxiliar function to store position, angles, rotation, anchor point and scale 
+gameobject: represents any 'item' to be rendered storing the drawing function and the transform to that object
+
+main: main file that creates and renders the noria
+
+

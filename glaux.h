@@ -27,5 +27,6 @@ void rotateArround(v3 currentPosition, v3 point, v3 angle);
 
 // Auxiliar color functions
 void setColor(v3 v);
+v3 getRandomColor();
 
 #endif
