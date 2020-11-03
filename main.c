@@ -21,75 +21,33 @@
 // Rendering functions
 
 void bodyDrawFunction(){
-    glBegin(GL_TRIANGLES);                      
-        setColor(v3New(0.5,0.5,0.5));
-
-        glVertex3f( 0.0f, 1.0f, 0.25f);
-        glVertex3f( 0.5f, 0.0f, 0.25f);
-        glVertex3f(-0.5f, 0.0f, 0.25f);
-
-        glVertex3f( 0.0f, 1.0f, -0.25f);
-        glVertex3f( 0.5f, 0.0f, -0.25f);
-        glVertex3f(-0.5f, 0.0f, -0.25f);
-
-    glEnd();  // End of drawing color-cube
-
-    glBegin(GL_POLYGON);                  
-        setColor(v3New(1, 0.3, 0.3));
-        // base
-        glVertex3f( 0.5f, 0.0f,-0.25f);
-        glVertex3f( 0.5f, 0.0f, 0.25f);
-        glVertex3f(-0.5f, 0.0f, 0.25f);
-        glVertex3f(-0.5f, 0.0f,-0.25f);
-
-    glEnd();  
-
-    glBegin(GL_POLYGON);                  
-        setColor(v3New(0.3, 1, 0.3));
-        // side1
-        glVertex3f( 0.0f, 1.0f, 0.25f);
-        glVertex3f(-0.5f, 0.0f, 0.25f);
-        glVertex3f(-0.5f, 0.0f,-0.25f);
-        glVertex3f( 0.0f, 1.0f,-0.25f);
-    glEnd();  
-
-    glBegin(GL_POLYGON);                  
-        setColor(v3New(0.3, 0.3, 1));
-        // side2
-        glVertex3f( 0.0f, 1.0f,-0.25f);
-        glVertex3f( 0.5f, 0.0f,-0.25f);
-        glVertex3f( 0.5f, 0.0f, 0.25f);
-        glVertex3f( 0.0f, 1.0f, 0.25f);
-    glEnd();  
+    // triangle
+    
+    glPushMatrix();
+    rotate(v3New(270,0,0));
+    setColor(v3New(0.8,0.2,0.2));
+    glutSolidCone(1, 5, 20, 20);
+    setColor(v3New(0,0,0));
+    glutWireCone(1, 5, 20, 20);
+    glPopMatrix();
+    
+    // base
+    glPushMatrix();
+    setColor(v3New(0.5,0.5,0.5));
+    scale(v3New(5, 0.1, 5));
+    glutSolidCube(1);
+    glPopMatrix();
+    
 }
-
-
 
 
 gameobject createBody(){
     v3 position = v3New(0, 0, 0);
-    v3 scale = v3New(3.0f, 5.0f, 1.0f);
+    v3 scale = v3New(1, 1, 1);
     v3 rotation = v3New(0, 0, 0);
     gameobject go = createGameobject(position, scale, rotation, bodyDrawFunction);
     return go;
 }
-void centerDrawFunction(){
-    setColor(v3New(1,1,0));
-    glutWireSphere(1, 20, 20);
-}
-gameobject createCenter(){
-    v3 p = v3New(0, 2.5, 0);        // The arm should be in the center of the body
-    v3 s = v3New(1, 1, 1);          // The arm should be the same size of the body
-    v3 r = v3New(0, 0, 0);          
-
-    gameobject go = createGameobject(p, s, r, centerDrawFunction);
-    return go;
-}
-
-void cubeDrawFunction(){
-    glutSolidCube(1);
-}
-
 // Program
 
 float aspectRatio;
@@ -130,10 +88,23 @@ arm arm_6;
 
 arm moveAndRenderArm(arm a){
     glPushMatrix();
+
+    // Do all the transformations in order to put the arm in its place
+    move(a.gameobject.transform.position);
+    rotate(a.gameobject.transform.eulerAngles);
+    
+    // Update the rotation
     a=computeArmRotation(a, center.transform.position);
+    
+    // Render the model
     renderGameobject(a.gameobject);
+    
     glPopMatrix();
     return a;
+}
+
+void renderBody(){
+    renderGameobject(body);
 }
 
 void doRenders(){
@@ -141,7 +112,7 @@ void doRenders(){
     rotate(cameraRotation);
 
     glPushMatrix();
-        renderGameobject(body);
+        renderBody();
     glPopMatrix();
     
     arm_1 = moveAndRenderArm(arm_1);
@@ -187,7 +158,6 @@ void init() {
     glLoadIdentity();
     
     body = createBody();
-    center = createCenter();
     
     arm_1=armNew(1, 1, 30, -30, 0, 0);
     arm_2=armNew(1, 1, 30, -30, 60, 30);

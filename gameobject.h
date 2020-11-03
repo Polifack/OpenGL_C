@@ -5,6 +5,7 @@
 #include "glaux.h"
 #include "transform.h"
 
+// Structure to store the draw function of an object and also its 3d parameters
 typedef void (*drawFunction)();
 typedef struct _gameobject{
     transform transform;        // Scale, rotation and position
@@ -13,9 +14,5 @@ typedef struct _gameobject{
 
 gameobject createGameobject(v3 pos, v3 scl, v3 rot, drawFunction draw);
 void renderGameobject(gameobject go);
-
-gameobject goRotation(gameobject go, v3 delta);
-gameobject goTranslation(gameobject go, v3 delta);
-gameobject goScaling(gameobject go, v3 delta);
 
 #endif

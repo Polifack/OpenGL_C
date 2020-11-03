@@ -1,17 +1,22 @@
 #include "arm.h"
+#include "glaux.h"
 #include <GL/gl.h>
 #include <GL/glut.h>
 
-void drawLongPart(){
-    glPushMatrix();                 // Save the matrix with the rotation 
+void armDrawFunction(){      
+    // Move the render point in order to have the rotation point in one side of the arm
+    move(v3New(0, 3, 0));           
+    
+    // Render the long part
+    glPushMatrix();
         scale(v3New(1,5,1));
         setColor(v3New(0.6,0.2,0.6));
         glutSolidCube(1);       
         setColor(v3New(0, 0, 0));
         glutWireCube(1);        
-    glPopMatrix();           
-}
-void drawWagonPart(){
+    glPopMatrix();     
+    
+    // Render the thing where the people are
     glPushMatrix();
         move(v3New(0, 3, 0));          
         scale(v3New(2,2,2));
@@ -22,22 +27,13 @@ void drawWagonPart(){
     glPopMatrix();
 }
 
-void armDrawFunction(){
-    // Draw function runs after applying the transformations
-    
-    move(v3New(0, 3, 0));           // Move the whole arm 3 units (half the arm)
-    
-    drawLongPart();
-    drawWagonPart();
-}
-
 gameobject createArmGameobject(float angleH, float angleV){
-    v3 p = v3New(0, 2.5, 0);
+    v3 p = v3New(0, 4, 0);
     v3 s = v3New(1, 1, 1);
     v3 r = v3New(0, 0, 90);
 
     gameobject go = createGameobject(p, s, r, armDrawFunction);
-    go.transform.rotation =  v3New(angleH, 0, angleV);
+    go.transform.rotation = v3New(angleH, 0, angleV);
 
     return go;
 }
@@ -61,6 +57,8 @@ arm computeArmRotation(arm a, v3 position){
         a.upspeed = a.upspeed*-1;
     }
     
-    a.gameobject.transform=doRotateArround(t, position, v3New(sidespeed, 0, a.upspeed));
+    a.gameobject.transform = 
+        doRotateArround(a.gameobject.transform, a.gameobject.transform.anchorPoint,  
+        v3New(sidespeed, 0, a.upspeed));
     return a;
 }

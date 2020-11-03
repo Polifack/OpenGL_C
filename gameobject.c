@@ -3,6 +3,7 @@
 #include "vector3.h"
 #include <GL/gl.h>
 
+
 gameobject createGameobject(v3 pos, v3 scl, v3 rot, drawFunction draw){
     gameobject go;
 
@@ -22,28 +23,6 @@ gameobject createGameobject(v3 pos, v3 scl, v3 rot, drawFunction draw){
 
 void renderGameobject(gameobject go){
     glPushMatrix();
-    applyTransform(go.transform);
-    go.draw();
+    go.draw();          
     glPopMatrix();
-}
-
-gameobject goRotation(gameobject go, v3 delta){
-    transform ct = go.transform;
-    transform t = doRotation(ct, delta);
-    go.transform = t;
-    return go;
-}
-
-gameobject goTranslation(gameobject go, v3 delta){
-    transform ct = go.transform;
-    transform t = doTranslation(ct, delta);
-    go.transform = t;
-    return go;
-}
-
-gameobject goScaling(gameobject go, v3 delta){
-    transform ct = go.transform;
-    transform t = doScaling(ct, delta);
-    go.transform = t;
-    return go;
 }
