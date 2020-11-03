@@ -30,10 +30,3 @@ transform doScaling(transform t, v3 deltaScale){
 
     return t;
 }
-transform doRotateArround(transform t, v3 rotationPoint, v3 deltaAngles){
-    t.anchorPoint = rotationPoint;     
-    t.rotation = v3Sum(t.rotation, deltaAngles);
-    rotateArround(t.position, t.anchorPoint, t.rotation);
-    
-    return t;
-}

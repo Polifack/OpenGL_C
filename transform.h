@@ -18,6 +18,5 @@ typedef struct _transform{
 transform doRotation(transform t, v3 deltaRotation);
 transform doTranslation(transform t, v3 deltaPosition);
 transform doScaling(transform t, v3 deltaScale);
-transform doRotateArround(transform t, v3 rotationPoint, v3 deltaAngles);
 
 #endif

@@ -12,6 +12,6 @@ typedef struct s_arm{
 } arm;
 
 arm armNew(float hSpeed, float vSpeed, float uLimit, float dLimit, float startAngleH, float startAngleV);
-arm computeArmRotation(arm a, v3 position);
+arm renderAtraction(arm a);
 
 #endif
